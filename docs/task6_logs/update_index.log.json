@@ -1,0 +1,20 @@
+{
+  "started_at": "2026-05-24T17:38:47",
+  "finished_at": "2026-05-24T17:38:52",
+  "duration_sec": 4.31,
+  "source_dir": "data\\incoming_docs",
+  "knowledge_base_dir": "data\\knowledge_base",
+  "vectorstore_dir": "vectorstore",
+  "embedding_model": "text-embedding-3-small",
+  "files_scanned": 1,
+  "files_added_or_changed": 0,
+  "documents_loaded": 35,
+  "chunks_indexed": 35,
+  "index_files": [
+    ".gitkeep",
+    "index.faiss",
+    "index.pkl"
+  ],
+  "errors": [],
+  "changed_files": []
+}

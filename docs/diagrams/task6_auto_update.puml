@@ -1,0 +1,28 @@
+@startuml
+title Task 6 — Daily Knowledge Base Update Flow
+
+skinparam componentStyle rectangle
+
+actor "Document owner" as Owner
+folder "data/incoming_docs" as Source
+component "scripts/update_index.py" as Updater
+database "Manifest\nindex_manifest.json" as Manifest
+component "Chunking\nRecursiveCharacterTextSplitter" as Chunking
+component "Embeddings\ntext-embedding-3-small" as Embeddings
+database "FAISS index\nvectorstore/index.faiss\nvectorstore/index.pkl" as Faiss
+folder "data/knowledge_base" as KnowledgeBase
+folder "docs/task6_logs" as Logs
+component "Windows Task Scheduler\nDaily 06:00" as Scheduler
+
+Owner --> Source : adds/updates .md/.txt files
+Scheduler --> Updater : starts daily
+Updater --> Source : scans files
+Updater --> Manifest : reads hashes
+Updater --> KnowledgeBase : copies new/changed files
+Updater --> Chunking : splits documents into chunks
+Chunking --> Embeddings : sends chunks for vectorization
+Embeddings --> Faiss : rebuilds vector index
+Updater --> Manifest : writes updated hashes
+Updater --> Logs : writes update_index.log.json
+
+@enduml
