@@ -1,0 +1,53 @@
+@startuml
+title Task 7 — RAG Evaluation Sequence
+
+actor Evaluator
+participant "scripts/evaluate.py" as Eval
+database "golden_questions.jsonl" as Golden
+database "coverage_gaps.json" as Gaps
+participant "RAG Bot\nanswer_question()" as Bot
+database "FAISS index" as Faiss
+participant "Retriever" as Retriever
+participant "Prompting + LLM" as LLM
+database "rag_evaluation_logs.jsonl" as Logs
+database "rag_evaluation_report.json" as Report
+
+Evaluator -> Eval : run evaluation
+Eval -> Golden : load golden questions
+Eval -> Gaps : load artificial gaps
+
+loop each question
+    Eval -> Bot : ask question
+    Bot -> Retriever : embed query + search
+    Retriever -> Faiss : similarity search
+    Faiss --> Retriever : chunks + scores
+    Retriever --> Bot : retrieved chunks
+
+    alt no relevant chunks
+        Bot --> Eval : "Я не знаю"
+    else prompt-injection or unsafe chunks
+        Bot -> Bot : filter unsafe chunks
+        Bot --> Eval : safe answer or "Я не знаю"
+    else relevant context found
+        Bot -> LLM : prompt with context + few-shot + source-based steps
+        LLM --> Bot : answer
+        Bot --> Eval : answer + sources
+    end
+
+    Eval -> Eval : compare with expected status, sources, keywords
+    Eval -> Logs : append JSONL record
+end
+
+Eval -> Report : write aggregate metrics
+
+note right of Eval
+Possible failure points:
+- empty index
+- irrelevant chunks
+- outdated document
+- artificial gap
+- prompt-injection chunk
+- LLM answer misses expected keyword
+end note
+
+@enduml

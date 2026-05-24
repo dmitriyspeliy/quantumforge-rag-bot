@@ -1,0 +1,120 @@
+{
+  "created_at": "2026-05-24T17:49:05",
+  "total": 12,
+  "passed": 12,
+  "failed": 0,
+  "pass_rate": 1.0,
+  "by_topic": {
+    "training": {
+      "total": 1,
+      "passed": 1,
+      "failed": 0
+    },
+    "organizations": {
+      "total": 1,
+      "passed": 1,
+      "failed": 0
+    },
+    "ships": {
+      "total": 1,
+      "passed": 1,
+      "failed": 0
+    },
+    "characters": {
+      "total": 1,
+      "passed": 1,
+      "failed": 0
+    },
+    "technology": {
+      "total": 1,
+      "passed": 1,
+      "failed": 0
+    },
+    "planets": {
+      "total": 1,
+      "passed": 1,
+      "failed": 0
+    },
+    "military": {
+      "total": 1,
+      "passed": 1,
+      "failed": 0
+    },
+    "artificial_gap": {
+      "total": 3,
+      "passed": 3,
+      "failed": 0
+    },
+    "outside_domain": {
+      "total": 2,
+      "passed": 2,
+      "failed": 0
+    }
+  },
+  "unanswered_count": 5,
+  "unanswered": [
+    {
+      "id": "q08",
+      "question": "Who was Xarn Velgor?",
+      "topic": "artificial_gap",
+      "sources": [
+        "02_lior_solvyr.md",
+        "07_vael_drakos.md",
+        "05_talon_veyr.md"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "q09",
+      "question": "What is the Void Core?",
+      "topic": "artificial_gap",
+      "sources": [
+        "02_lior_solvyr.md",
+        "19_orion_dominion.md",
+        "28_falconet_wingcraft.md"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "q10",
+      "question": "What is Synth Flux?",
+      "topic": "artificial_gap",
+      "sources": [
+        "33_hyperrelay.md",
+        "17_mirefall.md",
+        "02_lior_solvyr.md"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "q11",
+      "question": "What is the capital of Finland?",
+      "topic": "outside_domain",
+      "sources": [
+        "14_elyndra_prime.md",
+        "13_varuun.md",
+        "31_cloudhaven.md",
+        "16_nivara.md"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "q12",
+      "question": "How does QuantumForge integrate with Snowflake?",
+      "topic": "outside_domain",
+      "sources": [
+        "33_hyperrelay.md",
+        "31_cloudhaven.md",
+        "26_q9po.md"
+      ],
+      "notes": ""
+    }
+  ],
+  "failed_cases": [],
+  "recommendations": [
+    "Restore or improve documents for artificial gaps: Xarn Velgor, Void Core, Synth Flux.",
+    "Add more documents for external corporate integrations if QuantumForge/Snowflake questions are expected.",
+    "Review cases where retrieved sources are semantically close but do not contain the exact expected answer.",
+    "Keep golden_questions.jsonl under version control and run evaluation after every index update."
+  ]
+}

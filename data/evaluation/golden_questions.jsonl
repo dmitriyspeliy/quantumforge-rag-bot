@@ -1,0 +1,12 @@
+{"id":"q01","question":"Where did Oryn train Lior Solvyr?","expected_status":"answer","expected_sources":["06_oryn.md","17_mirefall.md"],"expected_keywords":["Oryn","Lior Solvyr","Mirefall"],"topic":"training"}
+{"id":"q02","question":"What organization resisted the Orion Dominion?","expected_status":"answer","expected_sources":["20_free_systems_accord.md"],"expected_keywords":["Free Systems Accord","Orion Dominion"],"topic":"organizations"}
+{"id":"q03","question":"What is the Silver Kestrel?","expected_status":"answer","expected_sources":["12_silver_kestrel.md"],"expected_keywords":["Silver Kestrel"],"topic":"ships"}
+{"id":"q04","question":"Who was Mira Orvane?","expected_status":"answer","expected_sources":["03_mira_orvane.md"],"expected_keywords":["Mira Orvane","Free Systems Accord"],"topic":"characters"}
+{"id":"q05","question":"What is HyperRelay?","expected_status":"answer","expected_sources":["33_hyperrelay.md"],"expected_keywords":["HyperRelay","Free Systems Accord","Flux"],"topic":"technology"}
+{"id":"q06","question":"What happened on Mirefall?","expected_status":"answer","expected_sources":["17_mirefall.md"],"expected_keywords":["Mirefall"],"topic":"planets"}
+{"id":"q07","question":"What are Ashguard units?","expected_status":"answer","expected_sources":["23_ashguard.md"],"expected_keywords":["Ashguard","Orion Dominion"],"topic":"military"}
+{"id":"q08","question":"Who was Xarn Velgor?","expected_status":"unknown","expected_sources":[],"expected_keywords":[],"topic":"artificial_gap"}
+{"id":"q09","question":"What is the Void Core?","expected_status":"unknown","expected_sources":[],"expected_keywords":[],"topic":"artificial_gap"}
+{"id":"q10","question":"What is Synth Flux?","expected_status":"unknown","expected_sources":[],"expected_keywords":[],"topic":"artificial_gap"}
+{"id":"q11","question":"What is the capital of Finland?","expected_status":"unknown","expected_sources":[],"expected_keywords":[],"topic":"outside_domain"}
+{"id":"q12","question":"How does QuantumForge integrate with Snowflake?","expected_status":"unknown","expected_sources":[],"expected_keywords":[],"topic":"outside_domain"}

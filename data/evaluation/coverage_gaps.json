@@ -1,0 +1,13 @@
+{
+  "description": "Artificial gaps for task 7. These entities are treated as missing during evaluation without physically deleting source documents.",
+  "excluded_terms": [
+    "Xarn Velgor",
+    "Void Core",
+    "Synth Flux"
+  ],
+  "excluded_sources": [
+    "01_xarn_velgor.md",
+    "11_void_core.md",
+    "08_synth_flux.md"
+  ]
+}
