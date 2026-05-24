@@ -32,7 +32,14 @@ def main() -> None:
     print("Answer:")
     print(result.answer)
     print()
-    print("Retrieved chunks:")
+
+    if result.blocked_sources:
+        print("Blocked chunks:")
+        for source in result.blocked_sources:
+            print(f"- {source.source}#{source.chunk_id}, score={source.score:.4f}, title={source.title}")
+        print()
+
+    print("Retrieved safe chunks:")
     for source in result.sources:
         print(f"- {source.source}#{source.chunk_id}, score={source.score:.4f}, title={source.title}")
 

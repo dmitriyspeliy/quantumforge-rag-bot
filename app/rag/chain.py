@@ -4,14 +4,15 @@ RAG answer chain.
 Pipeline:
 1. Convert user query to embedding using the same embedding model as indexing.
 2. Search nearest chunks in FAISS.
-3. Apply a score threshold to avoid unsupported answers.
-4. Build a prompt with context, few-shot examples and concise source-based reasoning instructions.
-5. Call LLM and return the answer.
+3. Filter retrieved prompt-injection chunks.
+4. Apply a score threshold to avoid unsupported answers.
+5. Build a prompt with safe context, few-shot examples and source-based reasoning instructions.
+6. Call LLM and return the answer.
 """
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from langchain_openai import ChatOpenAI
 
@@ -19,6 +20,7 @@ from app.config import Settings
 from app.rag.embeddings import create_embeddings
 from app.rag.prompting import FEW_SHOT_EXAMPLES, RAG_PROMPT, format_context
 from app.rag.retriever import SearchResult, search_index
+from app.rag.security import filter_unsafe_chunks
 from app.rag.vector_store import load_faiss_index
 
 
@@ -34,6 +36,7 @@ class RagAnswer:
     question: str
     answer: str
     sources: list[SearchResult]
+    blocked_sources: list[SearchResult] = field(default_factory=list)
 
 
 def create_chat_model(settings: Settings) -> ChatOpenAI:
@@ -76,13 +79,20 @@ def answer_question(question: str, settings: Settings) -> RagAnswer:
     embeddings = create_embeddings(settings.embedding_model)
     db = load_faiss_index(embeddings, settings.vectorstore_dir)
 
-    results = search_index(db, question, top_k=settings.rag_top_k)
+    retrieved_results = search_index(db, question, top_k=settings.rag_top_k)
 
-    if not should_answer(results, settings.rag_score_threshold):
+    if settings.rag_enable_chunk_filter:
+        safe_results, blocked_results = filter_unsafe_chunks(retrieved_results)
+    else:
+        safe_results = retrieved_results
+        blocked_results = []
+
+    if not should_answer(safe_results, settings.rag_score_threshold):
         return RagAnswer(
             question=question,
             answer=UNKNOWN_ANSWER,
-            sources=results,
+            sources=safe_results,
+            blocked_sources=blocked_results,
         )
 
     context = format_context(
@@ -94,7 +104,7 @@ def answer_question(question: str, settings: Settings) -> RagAnswer:
                 "score": item.score,
                 "content": item.content,
             }
-            for item in results
+            for item in safe_results
         ]
     )
 
@@ -112,5 +122,6 @@ def answer_question(question: str, settings: Settings) -> RagAnswer:
     return RagAnswer(
         question=question,
         answer=str(response.content).strip(),
-        sources=results,
+        sources=safe_results,
+        blocked_sources=blocked_results,
     )

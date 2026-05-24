@@ -33,6 +33,18 @@ class Settings:
     chunk_overlap: int
     rag_top_k: int
     rag_score_threshold: float
+    rag_enable_chunk_filter: bool
+
+
+def _as_bool(value: str | None, default: bool = True) -> bool:
+    """
+    Convert environment string to boolean.
+    """
+
+    if value is None:
+        return default
+
+    return value.strip().lower() in {"1", "true", "yes", "y", "on"}
 
 
 def get_settings() -> Settings:
@@ -51,4 +63,5 @@ def get_settings() -> Settings:
         chunk_overlap=int(os.getenv("CHUNK_OVERLAP", "150")),
         rag_top_k=int(os.getenv("RAG_TOP_K", "4")),
         rag_score_threshold=float(os.getenv("RAG_SCORE_THRESHOLD", "0.85")),
+        rag_enable_chunk_filter=_as_bool(os.getenv("RAG_ENABLE_CHUNK_FILTER"), default=True),
     )
