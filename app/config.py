@@ -1,4 +1,4 @@
-﻿"""
+"""
 Application configuration for the QuantumForge RAG bot.
 """
 
@@ -28,9 +28,11 @@ class Settings:
     knowledge_base_dir: Path
     vectorstore_dir: Path
     embedding_model: str
+    chat_model: str
     chunk_size: int
     chunk_overlap: int
     rag_top_k: int
+    rag_score_threshold: float
 
 
 def get_settings() -> Settings:
@@ -43,8 +45,10 @@ def get_settings() -> Settings:
         openai_base_url=(os.getenv("OPENAI_BASE_URL") or "").strip() or None,
         knowledge_base_dir=Path(os.getenv("KNOWLEDGE_BASE_DIR", "data/knowledge_base")),
         vectorstore_dir=Path(os.getenv("VECTORSTORE_DIR", "vectorstore")),
-        embedding_model=os.getenv("EMBEDDING_MODEL", "text-embedding-3-small"),
+        embedding_model=os.getenv("EMBEDDING_MODEL", "text-embedding-3-small").strip(),
+        chat_model=os.getenv("CHAT_MODEL", "gpt-4.1-mini").strip(),
         chunk_size=int(os.getenv("CHUNK_SIZE", "1200")),
         chunk_overlap=int(os.getenv("CHUNK_OVERLAP", "150")),
         rag_top_k=int(os.getenv("RAG_TOP_K", "4")),
+        rag_score_threshold=float(os.getenv("RAG_SCORE_THRESHOLD", "0.85")),
     )
